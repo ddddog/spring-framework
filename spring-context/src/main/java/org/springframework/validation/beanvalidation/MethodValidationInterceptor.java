@@ -139,6 +139,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 			Set<ConstraintViolation<?>> result;
 
 			try {
+				//方法参数的校验
 				result = (Set<ConstraintViolation<?>>) ReflectionUtils.invokeMethod(validateParametersMethod,
 						execVal, invocation.getThis(), methodToValidate, invocation.getArguments(), groups);
 			}
@@ -155,6 +156,7 @@ public class MethodValidationInterceptor implements MethodInterceptor {
 			}
 
 			Object returnValue = invocation.proceed();
+			//方法返回值的校验
 			result = (Set<ConstraintViolation<?>>) ReflectionUtils.invokeMethod(validateReturnValueMethod,
 					execVal, invocation.getThis(), methodToValidate, returnValue, groups);
 			if (!result.isEmpty()) {
